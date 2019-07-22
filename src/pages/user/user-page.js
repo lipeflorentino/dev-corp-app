@@ -30,23 +30,22 @@ class User extends Component {
     }
     
     loadReservas = () => {
-        const api = "http://ec2-3-17-73-56.us-east-2.compute.amazonaws.com:3000/api/reservas";
-        fetch(api)
-          .then(response => {
-            if (response) {
-                console.log(response.json())
-              return response.json();
-            } else {
-              throw new Error('Something went wrong ...');
-            }
-          })
-          .then(data => this.setState({ reservas: data}))
-          .catch(error => this.setState({ error }));
+        // const api = "http://ec2-3-17-73-56.us-east-2.compute.amazonaws.com:3000/api/reservas";
+        // fetch(api)
+        //   .then(response => {
+        //     if (response) {
+        //         console.log(response.json())
+        //       return response.json();
+        //     } else {
+        //       throw new Error('Something went wrong ...');
+        //     }
+        //   })
+        //   .then(data => this.setState({ reservas: data}))
+        //   .catch(error => this.setState({ error }));
     }
     
     render() {
         const { reservas, error } = this.state;
-        console.log('res: ' + reservas);
         
         if (error) {
           return <p>{error.message}</p>;
@@ -75,11 +74,9 @@ class User extends Component {
                             <div className="uc-rects">
                                 <h2>Minhas Reservas</h2>
                                 <ul>
-                                {
-                                    reservas.map((n, key) =>
-                                        <li>{n.reservaId}</li>
-                                    )    
-                                }
+                                    <li>reserva 1</li>
+                                    <li>reserva 2</li>
+                                    <li>reserva 3</li>
                                 </ul>
                                 
                             </div>
