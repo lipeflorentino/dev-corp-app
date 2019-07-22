@@ -1,5 +1,5 @@
 // Importando o React
-import React from "react";
+import React, { Component } from "react";
 // Importando os components necessários da lib react-materialize
 import { Row, Col } from 'react-materialize';
 
@@ -8,64 +8,106 @@ import './user.scss';
 
 //importando componentes
 import img from './img/perfil.png';
+import fetch from 'cross-fetch';
 //Content
-const User = () => (
 
-    <div className="user-container">
-        <div className="uc-content">
-            <div className="user-profile">
-            <Row>
-                <Col m={3}>
-                    <div className="up-img">
-                        <img src={img} title="" alt=""></img>
-                    </div>    
-                </Col>
-                <Col m={6}>
-                    <div className="up-text">
-                        <p><strong>Nome: </strong> Joaquim Silva</p>
-                        <p><strong>Tipo: </strong> Aluno</p>
-                    </div>    
-                </Col>
-            </Row>    
-            </div>
-            <div className="uc-rects">
-                <h2>Minhas Reservas</h2>
-                <ul>
-                    <li>Reserva item 1</li>
-                    <li>Reserva item 2</li>
-                    <li>Reserva item 3</li>
-                </ul>
-            </div>
-            <div className="uc-rects">
-                <h2>Solicitar Reservas</h2>
-                <div class="row">
-                    <form class="col s12">
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input id="assunto" type="text" class="validate"></input>
-                          <label for="assunto">Assunto</label>
+class User extends Component {
+    
+    //constructor
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            user: {},
+            error: null
+        };
+    }
+    
+    //setando estado carregando e chamando function para pegar dados da api
+    componentDidMount() {        
+        this.setState();  
+        this.loadData();
+    }
+    
+    loadData = () => {
+        const api = "http://localhost:3000/users/";
+        fetch(api)
+          .then(response => {
+            if (response) {
+              return response.json();
+            } else {
+              throw new Error('Something went wrong ...');
+            }
+          })
+          .then(data => this.setState({ user: data}))
+          .catch(error => this.setState({ error }));
+    }
+    
+    render() {
+        const { user, error } = this.state;
+        if (error) {
+          return <p>{error.message}</p>;
+        }
+        
+        return (
+
+                <div className="user-container">
+                    <div className="uc-content">
+                        <div className="user-profile">
+                        <Row>
+                            <Col m={3}>
+                                <div className="up-img">
+                                    <img src={img} title="" alt=""></img>
+                                </div>    
+                            </Col>
+                            <Col m={6}>
+                                <div className="up-text">
+                                    <p><strong>Nome: </strong> Joaquim Silva</p>
+                                    <p><strong>Tipo: </strong> Aluno</p>
+                                </div>    
+                            </Col>
+                        </Row>    
                         </div>
-                        <div class="input-field col s12">
-                          <textarea id="textarea1" class="materialize-textarea"></textarea>
-                          <label for="textarea1">Mensagem...</label>
+                        <div className="uc-rects">
+                            <h2>Minhas Reservas</h2>
+                            <ul>
+                                <li>Reserva item 1</li>
+                                <li>Reserva item 2</li>
+                                <li>Reserva item 3</li>
+                            </ul>
                         </div>
-                        <a href="/user" class="btn waves-effect waves-light" type="submit" name="action">
-                            Enviar
-                        </a>
-                      </div>
-                    </form>
-                </div>
-            </div>
-            <div className="uc-rects">
-                <h2>Últimas Reservas</h2>
-                <ul>
-                    <li>Reserva item 1</li>
-                    <li>Reserva item 2</li>
-                    <li>Reserva item 3</li>
-                </ul>
-            </div>
-        </div>
-    </div>    
-);
+                        <div className="uc-rects">
+                            <h2>Solicitar Reservas</h2>
+                            <div class="row">
+                                <form class="col s12">
+                                  <div class="row">
+                                    <div class="input-field col s12">
+                                      <input id="assunto" type="text" class="validate"></input>
+                                      <label for="assunto">Assunto</label>
+                                    </div>
+                                    <div class="input-field col s12">
+                                      <textarea id="textarea1" class="materialize-textarea"></textarea>
+                                      <label for="textarea1">Mensagem...</label>
+                                    </div>
+                                    <a href="/user" class="btn waves-effect waves-light" type="submit" name="action">
+                                        Enviar
+                                    </a>
+                                  </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div className="uc-rects">
+                            <h2>Últimas Reservas</h2>
+                            <ul>
+                                <li>Reserva item 1</li>
+                                <li>Reserva item 2</li>
+                                <li>Reserva item 3</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>    
+            );
+    }
+}
 
 export default User;

@@ -21,6 +21,8 @@ ReactDOM.render(
             <Route path="/login" component={Login} />
             <Route path="/user" component={User} />
             <Route path="/admin" component={Admin} />
+            <Route path="/admin/gerenciar_salas" component={Admin} />
+            
         </Switch>
     </ BrowserRouter>
     , document.getElementById('root'));
